@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <style>
+        :root {
+            --linkedin-blue: #0a66c2;
+            --linkedin-blue-hover: #004182;
+            --linkedin-light-blue: #e8f3fc;
+            --linkedin-green: #057642;
+            --linkedin-text: #191919;
+            --linkedin-text-secondary: #666666;
+            --linkedin-border: #e0e0e0;
+            --linkedin-bg: #f3f2ef;
+            --bg: white;
+            --input-bg: white;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --linkedin-blue: #70b5f9;
+                --linkedin-blue-hover: #9dcbfc;
+                --linkedin-light-blue: #1d3b53;
+                --linkedin-green: #7fc15e;
+                --linkedin-text: #e9e9e9;
+                --linkedin-text-secondary: #a0a0a0;
+                --linkedin-border: #3a3a3a;
+                --linkedin-bg: #1e1e1e;
+                --bg: #1b1f23;
+                --input-bg: #2d333b;
+            }
+        }
+
+        html,
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-size: 14px;
+            padding: 0;
+            min-width: 260px;
+            margin: 0;
+            background: var(--bg);
+            color: var(--linkedin-text);
+        }
+
+        .header {
+            background: var(--linkedin-blue);
+            color: white;
+            padding: 12px 16px;
+            font-weight: 600;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .header {
+                color: #1b1f23;
+            }
+        }
+
+        .header-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .content {
+            padding: 12px 16px;
+        }
+
+        section {
+            margin-bottom: 16px;
+        }
+
+        section:last-child {
+            margin-bottom: 0;
+        }
+
+        h2 {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--linkedin-text-secondary);
+            margin: 0 0 10px 0;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--linkedin-border);
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+        }
+
+        .keyword {
+            color: var(--linkedin-text-secondary);
+        }
+
+        .count {
+            font-weight: 600;
+            color: var(--linkedin-blue);
+        }
+
+        .total {
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid var(--linkedin-border);
+            font-weight: 600;
+        }
+
+        .total .count {
+            color: var(--linkedin-green);
+        }
+
+        .empty {
+            color: var(--linkedin-text-secondary);
+            font-style: italic;
+            padding: 8px 0;
+        }
+
+        .keyword-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .keyword-tag {
+            background: var(--linkedin-light-blue);
+            color: var(--linkedin-blue);
+            border-radius: 16px;
+            padding: 6px 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 500;
+        }
+
+        .keyword-tag button {
+            background: none;
+            border: none;
+            color: var(--linkedin-blue);
+            cursor: pointer;
+            padding: 0;
+            margin: 0;
+            font-size: 16px;
+            line-height: 1;
+            width: auto;
+            opacity: 0.7;
+        }
+
+        .keyword-tag button:hover {
+            opacity: 1;
+            color: #c00;
+        }
+
+        .add-keyword {
+            display: flex;
+            gap: 8px;
+        }
+
+        .add-keyword input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid var(--linkedin-border);
+            border-radius: 4px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.15s;
+            background: var(--input-bg);
+            color: var(--linkedin-text);
+        }
+
+        .add-keyword input:focus {
+            border-color: var(--linkedin-blue);
+        }
+
+        .add-keyword input::placeholder {
+            color: var(--linkedin-text-secondary);
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 16px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.15s;
+        }
+
+        .btn-primary {
+            background: var(--linkedin-blue);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--linkedin-blue-hover);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--linkedin-text-secondary);
+            border: 1px solid var(--linkedin-border);
+            margin-top: 8px;
+            width: 100%;
+        }
+
+        .btn-secondary:hover {
+            background: var(--linkedin-bg);
+            border-color: var(--linkedin-text-secondary);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        LinkedOut: Feed Cleaner
+    </div>
+
+    <div class="content">
+        <section>
+            <h2>Blocked Keywords</h2>
+            <div id="keywords" class="keyword-list"></div>
+            <div class="add-keyword">
+                <input type="text" id="newKeyword" placeholder="Add keyword...">
+                <button id="addBtn" class="btn btn-primary">Add</button>
+            </div>
+        </section>
+
+        <section>
+            <h2>Posts Blocked</h2>
+            <div id="stats"></div>
+            <button id="clear" class="btn btn-secondary">Clear Stats</button>
+        </section>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+
+</html>

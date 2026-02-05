@@ -1,0 +1,38 @@
+{
+  "manifest_version": 2,
+  "name": "LinkedOut",
+  "version": "1.0.0",
+  "description": "Hide LinkedIn feed posts containing keywords you don't want to see. Block the buzzwords, clean your feed.",
+  "author": "Nick",
+  "homepage_url": "https://github.com/nick/linkedout",
+  "permissions": ["storage"],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "nickwilder@duck.com",
+      "strict_min_version": "109.0"
+    }
+  },
+  "icons": {
+    "48": "icons/icon-48.png",
+    "96": "icons/icon-96.png"
+  },
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_title": "LinkedOut",
+    "default_icon": {
+      "16": "icons/icon-48.png",
+      "32": "icons/icon-48.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.linkedin.com/feed/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
