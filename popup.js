@@ -14,19 +14,28 @@ async function loadKeywords() {
   const container = document.getElementById('keywords');
   
   if (keywords.length === 0) {
-    container.innerHTML = '<div class="empty">No keywords</div>';
+    container.textContent = '';
+    const empty = document.createElement('div');
+    empty.className = 'empty';
+    empty.textContent = 'No keywords';
+    container.appendChild(empty);
     return;
   }
   
-  container.innerHTML = keywords.map(keyword => `
-    <span class="keyword-tag">
-      ${escapeHtml(keyword)}
-      <button data-keyword="${escapeHtml(keyword)}" title="Remove">&times;</button>
-    </span>
-  `).join('');
-  
-  container.querySelectorAll('button').forEach(btn => {
-    btn.addEventListener('click', () => removeKeyword(btn.dataset.keyword));
+  container.textContent = '';
+  keywords.forEach(keyword => {
+    const tag = document.createElement('span');
+    tag.className = 'keyword-tag';
+    tag.appendChild(document.createTextNode(keyword));
+    
+    const btn = document.createElement('button');
+    btn.dataset.keyword = keyword;
+    btn.title = 'Remove';
+    btn.textContent = '\u00D7';
+    btn.addEventListener('click', () => removeKeyword(keyword));
+    tag.appendChild(btn);
+    
+    container.appendChild(tag);
   });
 }
 
@@ -67,40 +76,52 @@ async function loadStats() {
   const container = document.getElementById('stats');
   
   if (stats.total === 0) {
-    container.innerHTML = '<div class="empty">No posts blocked yet</div>';
+    container.textContent = '';
+    const empty = document.createElement('div');
+    empty.className = 'empty';
+    empty.textContent = 'No posts blocked yet';
+    container.appendChild(empty);
     return;
   }
   
+  container.textContent = '';
   const sortedKeywords = Object.entries(stats.byKeyword).sort((a, b) => b[1] - a[1]);
   
-  let html = sortedKeywords.map(([keyword, count]) => `
-    <div class="stat-row">
-      <span class="keyword">${escapeHtml(keyword)}</span>
-      <span class="count">${count}</span>
-    </div>
-  `).join('');
+  sortedKeywords.forEach(([keyword, count]) => {
+    const row = document.createElement('div');
+    row.className = 'stat-row';
+    
+    const keywordSpan = document.createElement('span');
+    keywordSpan.className = 'keyword';
+    keywordSpan.textContent = keyword;
+    row.appendChild(keywordSpan);
+    
+    const countSpan = document.createElement('span');
+    countSpan.className = 'count';
+    countSpan.textContent = count;
+    row.appendChild(countSpan);
+    
+    container.appendChild(row);
+  });
   
-  html += `
-    <div class="stat-row total">
-      <span>Total</span>
-      <span>${stats.total}</span>
-    </div>
-  `;
+  const totalRow = document.createElement('div');
+  totalRow.className = 'stat-row total';
   
-  container.innerHTML = html;
+  const totalLabel = document.createElement('span');
+  totalLabel.textContent = 'Total';
+  totalRow.appendChild(totalLabel);
+  
+  const totalCount = document.createElement('span');
+  totalCount.textContent = stats.total;
+  totalRow.appendChild(totalCount);
+  
+  container.appendChild(totalRow);
 }
 
 /** Clear all stats */
 async function clearStats() {
   await browser.storage.local.set({ stats: { total: 0, byKeyword: {} } });
   loadStats();
-}
-
-/** Escape HTML to prevent XSS */
-function escapeHtml(text) {
-  const div = document.createElement('div');
-  div.textContent = text;
-  return div.innerHTML;
 }
 
 document.getElementById('addBtn').addEventListener('click', addKeyword);
