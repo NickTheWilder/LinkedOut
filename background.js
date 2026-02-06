@@ -1,3 +1,5 @@
+importScripts('browser-polyfill.min.js');
+
 const DEFAULT_KEYWORDS = ['crypto', 'ai'];
 
 /** Initialize default keywords on install */
