@@ -25,14 +25,20 @@ function escapeRegex(string) {
 
 /** Extract post text content from a post element */
 function getPostText(postElement) {
-    const textElement = postElement.querySelector('.update-components-text');
-    if (textElement) {
-        return textElement.textContent || '';
-    }
+    // Try multiple selectors for different post types
+    const selectors = [
+        '.update-components-text',
+        '.break-words',
+        '.feed-shared-update-v2__description',
+        '.feed-shared-text',
+        '[data-test-id="main-feed-activity-card__commentary"]'
+    ];
 
-    const breakWords = postElement.querySelector('.break-words');
-    if (breakWords) {
-        return breakWords.textContent || '';
+    for (const selector of selectors) {
+        const element = postElement.querySelector(selector);
+        if (element && element.textContent.trim()) {
+            return element.textContent;
+        }
     }
 
     return '';
@@ -43,6 +49,17 @@ function hidePost(postElement) {
     postElement.style.display = 'none';
 }
 
+/** Increment the block count for a keyword */
+async function incrementBlockCount(keyword) {
+    const data = await browser.storage.local.get('stats');
+    const stats = data.stats || { total: 0, byKeyword: {} };
+    
+    stats.total += 1;
+    stats.byKeyword[keyword] = (stats.byKeyword[keyword] || 0) + 1;
+    
+    await browser.storage.local.set({ stats });
+}
+
 /** Process a single post - hide if it contains blocked keywords */
 function processPost(postElement) {
     if (blockedKeywords.length === 0) return;
@@ -51,6 +68,9 @@ function processPost(postElement) {
 
     const text = getPostText(postElement);
 
+    // Don't mark as processed if no text yet (lazy-loaded placeholder)
+    if (!text.trim()) return;
+
     postElement.dataset.keywordBlockerProcessed = 'true';
 
     const matchedKeyword = findBlockedKeyword(text);
@@ -58,7 +78,7 @@ function processPost(postElement) {
     if (matchedKeyword) {
         hidePost(postElement);
         postElement.dataset.keywordBlockerHidden = 'true';
-        browser.runtime.sendMessage({ type: 'postBlocked', keyword: matchedKeyword });
+        incrementBlockCount(matchedKeyword);
     }
 }
 
@@ -74,7 +94,13 @@ function setupObserver() {
     let lastProcessTime = 0;
     const MIN_INTERVAL = 50;
 
-    const observer = new MutationObserver(() => {
+    const observer = new MutationObserver((mutations) => {
+        // Ignore mutations caused by our own hiding
+        const dominated = mutations.every(m => 
+            m.type === 'attributes' && m.attributeName === 'style'
+        );
+        if (dominated) return;
+
         const now = Date.now();
 
         if (now - lastProcessTime >= MIN_INTERVAL) {

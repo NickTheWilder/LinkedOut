@@ -4,32 +4,41 @@ Tired of seeing BS on LinkedIn that you don't care to see? Well I have a solutio
 
 All in one browser extension that removes posts from LinkedIn based on keywords you set. Block the buzzwords, clean your feed.
 
-# Manual Installation
+# Installation
 
-**Stable:** Download and extract the latest [release](https://github.com/NickTheWilder/LinkedOut/releases)
+TODO: Extension store links
 
-**Development:** Clone this repo
+# Development
+
+Clone this repo:
 ```bash
 git clone https://github.com/NickTheWilder/LinkedOut.git
 ```
 
-## Firefox
+Build for your target browser:
+```bash
+./build.sh firefox  # Build Firefox extension
+./build.sh chrome   # Build Chrome extension
+./build.sh all      # Build both
+```
 
+Output zips are in `dist/`.
+
+## Firefox
 1. Go to `about:debugging`
 2. Click "This Firefox"
 3. Click "Load Temporary Add-on"
-4. Select the `manifest.json` file in the cloned/extracted folder
+4. Select `dist/firefox/manifest.json`
 
 ## Chrome
-
 1. Go to `chrome://extensions/`
 2. Enable "Developer mode" (toggle in top right)
 3. Click "Load unpacked"
-4. Select the cloned/extracted folder
+4. Select the `dist/chrome/` folder
 
 # Contributing
 
-Currently, this extension serves it's purpose. So likely won't be adding more.
+Currently, this extension serves its purpose. So likely won't be adding more.
 
 If you would like to contribute, please open an issue or pull request.
 
