@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": "Hide LinkedIn feed posts containing keywords you don't want to see. Block the buzzwords, clean your feed.",
   "author": "Nick",
-  "homepage_url": "https://github.com/nick/linkedout",
+  "homepage_url": "https://github.com/NickTheWilder/LinkedOut",
   "permissions": ["storage"],
   "browser_specific_settings": {
     "gecko": {
