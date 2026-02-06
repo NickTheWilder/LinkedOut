@@ -3,7 +3,7 @@
   "name": "LinkedOut",
   "version": "1.1.1",
   "description": "Hide LinkedIn feed posts containing keywords you don't want to see. Block the buzzwords, clean your feed.",
-  "author": "Nick Wilder",
+  "author": "Indigo Development",
   "homepage_url": "https://github.com/NickTheWilder/LinkedOut",
   "permissions": ["storage"],
   "browser_specific_settings": {
