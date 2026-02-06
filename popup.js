@@ -47,7 +47,7 @@ async function addKeyword() {
   if (!keyword) return;
   
   const data = await browser.storage.local.get('keywords');
-  const keywords = data.keywords || DEFAULT_KEYWORDS;
+  const keywords = data.keywords ?? DEFAULT_KEYWORDS;
   
   if (!keywords.includes(keyword)) {
     keywords.push(keyword);
