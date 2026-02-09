@@ -53,10 +53,10 @@ function hidePost(postElement) {
 async function incrementBlockCount(keyword) {
     const data = await browser.storage.local.get('stats');
     const stats = data.stats || { total: 0, byKeyword: {} };
-    
+
     stats.total += 1;
     stats.byKeyword[keyword] = (stats.byKeyword[keyword] || 0) + 1;
-    
+
     await browser.storage.local.set({ stats });
 }
 
@@ -96,7 +96,7 @@ function setupObserver() {
 
     const observer = new MutationObserver((mutations) => {
         // Ignore mutations caused by our own hiding
-        const dominated = mutations.every(m => 
+        const dominated = mutations.every(m =>
             m.type === 'attributes' && m.attributeName === 'style'
         );
         if (dominated) return;
@@ -135,10 +135,36 @@ function reprocessAllPosts() {
     processAllPosts();
 }
 
+/** Wait for first post with content to appear */
+function waitForPosts() {
+    return new Promise((resolve) => {
+        const check = () => {
+            const post = document.querySelector('div[data-id^="urn:li:activity"]');
+            return post && getPostText(post);
+        };
+
+        if (check()) {
+            resolve();
+            return;
+        }
+
+        const observer = new MutationObserver(() => {
+            if (check()) {
+                observer.disconnect();
+                resolve();
+            }
+        });
+
+        observer.observe(document.body, { childList: true, subtree: true });
+    });
+}
+
 /** Initialize the extension */
 async function init() {
     await loadKeywords();
     setupStorageListener();
+
+    await waitForPosts();
     processAllPosts();
     setupObserver();
 }
