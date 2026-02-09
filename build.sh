@@ -9,7 +9,7 @@ FILES="background.js browser-polyfill.min.js content.js popup.html popup.js icon
 base_manifest='{
   "manifest_version": 3,
   "name": "LinkedOut",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Hide LinkedIn feed posts containing keywords you dont want to see. Block the buzzwords, clean your feed.",
   "author": "Indigo Development",
   "homepage_url": "https://github.com/NickTheWilder/linked-out",
