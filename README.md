@@ -5,8 +5,8 @@ Tired of seeing BS on LinkedIn that you don't care to see? Well I have a solutio
 All in one browser extension that removes posts from LinkedIn based on keywords you set. Block the buzzwords, clean your feed.
 
 # Installation
-
-TODO: Extension store links
+- [Chrome](https://chromewebstore.google.com/detail/linkedout/llfldodoomjndmdlnoddpcfjfdccigle)
+- [Firefox](https://addons.mozilla.org/en-US/firefox/addon/linkedout-feed-cleaner/)
 
 # Development
 
