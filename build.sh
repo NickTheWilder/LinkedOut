@@ -12,7 +12,7 @@ base_manifest='{
   "version": "1.1.1",
   "description": "Hide LinkedIn feed posts containing keywords you dont want to see. Block the buzzwords, clean your feed.",
   "author": "Indigo Development",
-  "homepage_url": "https://github.com/NickTheWilder/LinkedOut",
+  "homepage_url": "https://github.com/NickTheWilder/linked-out",
   "permissions": ["storage"],
   "icons": {
     "48": "icons/icon-48.png",
