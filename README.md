@@ -1,14 +1,15 @@
-# LinkedOut
+# Linked Out
 
 Tired of seeing BS on LinkedIn that you don't care to see? Well I have a solution for you!
 
 All in one browser extension that removes posts from LinkedIn based on keywords you set. Block the buzzwords, clean your feed.
 
-# Installation
+## Installation
+Most recent release of extension can be found at the links below.
 - [Chrome](https://chromewebstore.google.com/detail/linkedout/llfldodoomjndmdlnoddpcfjfdccigle)
 - [Firefox](https://addons.mozilla.org/en-US/firefox/addon/linkedout-feed-cleaner/)
 
-# Development
+## Local Installation
 
 Clone this repo:
 ```bash
@@ -22,15 +23,15 @@ Build for your target browser:
 ./build.sh all      # Build both
 ```
 
-Output zips are in `dist/`.
+Output will be in `dist/`.
 
-## Firefox
+### Firefox
 1. Go to `about:debugging`
 2. Click "This Firefox"
 3. Click "Load Temporary Add-on"
 4. Select `dist/firefox/manifest.json`
 
-## Chrome
+### Chrome
 1. Go to `chrome://extensions/`
 2. Enable "Developer mode" (toggle in top right)
 3. Click "Load unpacked"
