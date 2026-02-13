@@ -27,7 +27,7 @@ base_manifest='{
     }
   },
   "content_scripts": [{
-    "matches": ["https://www.linkedin.com/feed*"],
+    "matches": ["https://www.linkedin.com/*"],
     "js": ["browser-polyfill.min.js", "content.js"],
     "run_at": "document_idle"
   }]
